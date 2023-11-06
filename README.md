@@ -1,4 +1,4 @@
-# mrdja
+# rsaitehu
 
-[Documentation](https://mrdja.readthedocs.io/)
+[Documentation](https://rsaitehu.readthedocs.io/)
 
