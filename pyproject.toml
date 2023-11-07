@@ -21,5 +21,7 @@ classifiers = [
 "Homepage" = "https://github.com/pypa/rsaitehu"
 "Bug Tracker" = "https://github.com/pypa/rsaitehu/issues"
 
-[tool.poetry.dependencies]
-sphinx-automodapi = "*"
+[project.optional-dependencies]
+sampling = ["numpy>=1.22.0", "open3d>=0.16.0"]
+docs = ["sphinx-automodapi"]
+

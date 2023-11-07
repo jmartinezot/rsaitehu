@@ -84,7 +84,7 @@ import numpy as np
 import open3d as o3d
 import math
 import rsaitehu.ransac.coreransacutils as crsu
-import rsaitehu.sampling as sampling
+import sampling.sampling as sampling
 from typing import Optional, List, Tuple, Dict, Union
 import rsaitehu.geometry as geom
 

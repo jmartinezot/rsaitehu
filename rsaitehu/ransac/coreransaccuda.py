@@ -2,7 +2,7 @@ from numba import cuda, float32
 import math
 import rsaitehu.ransac.coreransac as crs
 import rsaitehu.ransac.coreransacutils as crsu
-import rsaitehu.sampling as sampling
+import sampling.sampling as sampling
 import numpy as np
 import numba
 from time import time
