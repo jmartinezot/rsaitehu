@@ -4,7 +4,7 @@ Module for functions that take an ax object, draw something, and return the ax o
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
-import rsaitehu.geometry as geom
+from rsaitehu import geometry as geom
 import numpy as np
 
 def draw_segment(line: np.ndarray, color: str = 'red', style: str = '-', ax = None):

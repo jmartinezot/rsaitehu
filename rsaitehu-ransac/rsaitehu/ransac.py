@@ -83,10 +83,10 @@ of each iteration of the RANSAC algorithm.
 import numpy as np
 import open3d as o3d
 import math
-import rsaitehu.ransac.coreransacutils as crsu
-import sampling.sampling as sampling
+import ransacutils as crsu
+from rsaitehu import sampling as sampling
 from typing import Optional, List, Tuple, Dict, Union
-import rsaitehu.geometry as geom
+from rsaitehu import geometry as geom
 
 def get_how_many_below_threshold_between_line_and_points_and_their_indices(points: np.ndarray, line_two_points: np.ndarray, threshold: np.float32) -> Tuple[int, np.ndarray]:
     """

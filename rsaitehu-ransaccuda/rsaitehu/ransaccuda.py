@@ -1,14 +1,13 @@
 from numba import cuda, float32
 import math
-import rsaitehu.ransac.coreransac as crs
-import rsaitehu.ransac.coreransacutils as crsu
-import sampling.sampling as sampling
+from rsaitehu import ransac as crs
+from rsaitehu import sampling as sampling
 import numpy as np
 import numba
 from time import time
 from typing import Tuple, List, Dict
 import sys
-import rsaitehu.geometry as geom
+from rsaitehu import geometry as geom
 
 @cuda.jit
 def get_how_many_and_which_below_threshold_kernel(points_x: np.ndarray, points_y: np.ndarray, points_z: np.ndarray,
