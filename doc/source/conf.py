@@ -15,13 +15,17 @@ import sphinx_rtd_theme
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath('../../rsaitehu/rsaitehu-ransac/rsaitehu'))
-sys.path.insert(0, os.path.abspath('../../rsaitehu/rsaitehu-clustering/rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu-clustering/rsaitehu'))
 sys.path.insert(0, os.path.abspath('../../rsaitehu-drawing/rsaitehu'))
-sys.path.insert(0, os.path.abspath('../../rsaitehu/rsaitehu-drawing'))
-sys.path.insert(0, os.path.abspath('../../rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu-geometry/rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu-matplot3d/rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu-pointcloud/rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu-procrustes/rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu-ransac/rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu-ransaccuda/rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu-sampling/rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu-stats/rsaitehu'))
 sys.path.insert(0, os.path.abspath('../..'))  # Source code dir relative to this file
-
 
 # -- Project information -----------------------------------------------------
 
@@ -53,9 +57,18 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+# html_theme = 'alabaster'
+html_theme = "sphinx_rtd_theme" 
+html_theme_options = {'body_max_width' : None, 'collapse_navigation' : False}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# conf.py options for Latex
+latex_engine = 'pdflatex'
+latex_elements = {
+    'papersize': 'a4paper',
+    'pointsize': '10pt',
+    }

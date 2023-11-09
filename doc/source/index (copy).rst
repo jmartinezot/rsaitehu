@@ -9,6 +9,17 @@ Welcome to RSAITEHU's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+.. automodapi:: clustering
+.. automodapi:: drawing
+.. automodapi:: geometry
+.. automodapi:: matplot3d
+.. automodapi:: pointcloud
+.. automodapi:: procrustes
+.. automodapi:: ransac
+.. automodapi:: ransaccuda
+.. automodapi:: sampling
+.. automodapi:: stats
    
 Indices and tables
 ==================
