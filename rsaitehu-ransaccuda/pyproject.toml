@@ -1,4 +1,4 @@
-# rsaitehu-ransac/pyproject.toml
+# rsaitehu-ransaccuda/pyproject.toml
 
 [build-system]
 requires = ["setuptools", "setuptools-scm"]
@@ -10,9 +10,9 @@ include = ["rsaitehu"]
 namespaces = true
 
 [project]
-name = "rsaitehu-ransac"
+name = "rsaitehu-ransaccuda"
 version = "0.0.1"
-description = "ransac utilities"
+description = "ransac utilities with cuda support"
 dependencies = [
   "numpy>=1.22.0",
   "open3d>=0.16.0",

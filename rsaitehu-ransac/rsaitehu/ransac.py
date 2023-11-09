@@ -83,7 +83,7 @@ of each iteration of the RANSAC algorithm.
 import numpy as np
 import open3d as o3d
 import math
-import ransacutils as crsu
+from rsaitehu import ransacutils as crsu
 from rsaitehu import sampling as sampling
 from typing import Optional, List, Tuple, Dict, Union
 from rsaitehu import geometry as geom
@@ -105,16 +105,16 @@ def get_how_many_below_threshold_between_line_and_points_and_their_indices(point
 
     ::
 
-        >>> import rsaitehu.ransac.coreransac as coreransac
-        >>> import rsaitehu.geometry as geom
-        >>> import rsaitehu.drawing as drawing
+        >>> from rsaitehu import ransac
+        >>> from rsaitehu import geometry as geom
+        >>> from rsaitehu import drawing
         >>> import rsaitehu.matplot3d as plot3d
         >>> import numpy as np
         >>> import matplotlib.pyplot as plt
         >>> line = np.array([[0, 0, 0], [1, 1, 1]])
         >>> points = np.array([[-1, -1, -1], [0, 0, 0], [1, 1, 1], [2, 2, 2], [2, 2, 3], [2, 2, 4]])
         >>> threshold = 1
-        >>> count, indices_below = coreransac.get_how_many_below_threshold_between_line_and_points_and_their_indices(points, line, threshold)
+        >>> count, indices_below = ransac.get_how_many_below_threshold_between_line_and_points_and_their_indices(points, line, threshold)
         >>> count
         5
         >>> indices_below
@@ -194,12 +194,12 @@ def get_how_many_below_threshold_between_plane_and_points_and_their_indices(poin
 
     ::
 
-        >>> import rsaitehu.ransac.coreransac as coreransac
+        >>> from rsaitehu import ransac
         >>> import numpy as np
         >>> plane = np.array([1, 1, 1, 0])
         >>> points = np.array([[-1, -1, -1], [0, 0, 0], [1, 1, 1], [2, 2, 2], [2, 2, 3], [2, 2, 4]])
         >>> threshold = 1
-        >>> count, indices = coreransac.get_how_many_below_threshold_between_plane_and_points_and_their_indices(points, plane, threshold)
+        >>> count, indices = ransac.get_how_many_below_threshold_between_plane_and_points_and_their_indices(points, plane, threshold)
         >>> count
         1
         >>> indices
@@ -272,7 +272,7 @@ def get_ransac_plane_iteration_results(points: np.ndarray, threshold: float, len
 
     ::
 
-        >>> import rsaitehu.ransac.coreransac as coreransac
+        >>> from rsaitehu import ransac
         >>> import open3d as o3d
         >>> import numpy as np
         >>> import random
@@ -285,7 +285,7 @@ def get_ransac_plane_iteration_results(points: np.ndarray, threshold: float, len
         >>> pcd_points = np.asarray(office_pcd.points)
         >>> threshold = 0.1
         >>> num_iterations = 20
-        >>> dict_results = coreransac.get_ransac_plane_iteration_results(pcd_points, threshold, seed = 42)
+        >>> dict_results = ransac.get_ransac_plane_iteration_results(pcd_points, threshold, seed = 42)
         >>> dict_results
         >>> {'current_random_points': array([[1.61072648, 1.83984375, 1.91796875],
         >>> [3.00390625, 2.68674755, 2.01953125],
@@ -345,7 +345,7 @@ def get_ransac_plane_results(points: np.ndarray, threshold: float, num_iteration
 
     ::
 
-        >>> import rsaitehu.ransac.coreransac as coreransac
+        >>> from rsaitehu import ransac
         >>> import open3d as o3d
         >>> import numpy as np
         >>> import random
@@ -358,7 +358,7 @@ def get_ransac_plane_results(points: np.ndarray, threshold: float, num_iteration
         >>> pcd_points = np.asarray(office_pcd.points)
         >>> threshold = 0.1
         >>> num_iterations = 20
-        >>> dict_results = coreransac.get_ransac_plane_results(pcd_points, threshold, num_iterations, seed = 42)
+        >>> dict_results = ransac.get_ransac_plane_results(pcd_points, threshold, num_iterations, seed = 42)
         >>> dict_results
         {'best_plane': array([-0.17535096,  0.45186984, -2.44615646,  5.69205427]),
         'number_inliers': 153798,
@@ -413,7 +413,7 @@ def get_fitting_data_from_list_planes(points: np.ndarray, list_planes: List[np.n
 
     ::
 
-        >>> import rsaitehu.ransac.coreransac as coreransac
+        >>> from rsaitehu import ransac
         >>> import open3d as o3d
         >>> import numpy as np
         >>> import random
@@ -426,7 +426,7 @@ def get_fitting_data_from_list_planes(points: np.ndarray, list_planes: List[np.n
         >>> pcd_points = np.asarray(office_pcd.points)
         >>> threshold = 0.1
         >>> num_iterations = 20
-        >>> dict_results = coreransac.get_ransac_plane_results(pcd_points, threshold, num_iterations, seed = 42)
+        >>> dict_results = ransac.get_ransac_plane_results(pcd_points, threshold, num_iterations, seed = 42)
         >>> dict_results
         {'best_plane': array([-0.17535096,  0.45186984, -2.44615646,  5.69205427]),
         'number_inliers': 153798,
@@ -460,7 +460,7 @@ def get_best_fitting_data_from_list_planes(points: np.ndarray, list_planes: List
 
     ::
 
-        >>> import rsaitehu.ransac.coreransac as coreransac
+        >>> from rsaitehu import ransac
         >>> import open3d as o3d
         >>> import numpy as np
         >>> import random
@@ -473,7 +473,7 @@ def get_best_fitting_data_from_list_planes(points: np.ndarray, list_planes: List
         >>> pcd_points = np.asarray(office_pcd.points)
         >>> threshold = 0.1
         >>> num_iterations = 20
-        >>> dict_results = coreransac.get_ransac_plane_results(pcd_points, threshold, num_iterations, seed = 42)
+        >>> dict_results = ransac.get_ransac_plane_results(pcd_points, threshold, num_iterations, seed = 42)
         >>> dict_results
         {'best_plane': array([-0.17535096,  0.45186984, -2.44615646,  5.69205427]),
         'number_inliers': 153798,

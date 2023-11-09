@@ -14,18 +14,18 @@ import sphinx_rtd_theme
 #
 import os
 import sys
-
-sys.path.insert(0, os.path.abspath('../../rsaitehu/rsaitehu-ransac/rsaitehu'))
-sys.path.insert(0, os.path.abspath('../../rsaitehu/rsaitehu-clustering/rsaitehu'))
-sys.path.insert(0, os.path.abspath('../../rsaitehu-drawing/rsaitehu'))
-sys.path.insert(0, os.path.abspath('../../rsaitehu/rsaitehu-drawing'))
+'''
 sys.path.insert(0, os.path.abspath('../../rsaitehu'))
+sys.path.insert(0, os.path.abspath('../../rsaitehu/ransac'))
+'''
 sys.path.insert(0, os.path.abspath('../..'))  # Source code dir relative to this file
 
+def setup(app):
+    app.add_css_file('my_theme.css')
 
 # -- Project information -----------------------------------------------------
 
-project = 'RSAITEHU'
+project = 'rsaitehu'
 copyright = '2023, José María Martínez Otzeta'
 author = 'José María Martínez Otzeta'
 
@@ -35,9 +35,8 @@ author = 'José María Martínez Otzeta'
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
+# extensions = ['sphinx.ext.autodoc', 'sphinx_automodapi.automodapi']
 extensions = ['sphinx.ext.todo', 'sphinx.ext.viewcode', 'sphinx.ext.autodoc', 'sphinx.ext.imgmath', 'sphinx.ext.autosummary', 'sphinx_automodapi.automodapi', 'sphinx.ext.ifconfig']
-
-autosummary_generate = True  # Turn on sphinx.ext.autosummary
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -53,9 +52,25 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
+# html_theme = 'classic'
+# options for "classic"
+# html_theme_options = {'body_max_width' : None}
+html_theme = "sphinx_rtd_theme" 
+# html_theme_options = {'nosidebar': True, 'body_max_width' : None}
+# options for "sphinx_rtd_theme"
+html_theme_options = {'body_max_width' : None, 'collapse_navigation' : False}
+# html_theme = 'alabaster'
+# html_theme = "sphinx_rtd_theme"
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+# conf.py options for Latex
+latex_engine = 'pdflatex'
+latex_elements = {
+    'papersize': 'a4paper',
+    'pointsize': '10pt',
+    }
