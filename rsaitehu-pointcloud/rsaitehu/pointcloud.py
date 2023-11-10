@@ -1,3 +1,6 @@
+'''
+Point cloud module.
+'''
 import open3d as o3d
 from typing import List, Tuple, Dict, Any
 import numpy as np

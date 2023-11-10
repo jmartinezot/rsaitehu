@@ -6,33 +6,34 @@
 Welcome to RSAITEHU's documentation!
 ====================================
 
-Some words.
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
    
-   clustering
-   drawing
-   geometry
-   matplot3d
-   pointcloud
-   procrustes
-   ransac
-   ransaccuda
-   sampling
-   stats
+.. automodule:: clustering
+   :members:
+.. automodule:: drawing
+   :members:
+.. automodule:: geometry
+   :members:
+.. automodule:: matplot3d
+   :members:
+.. automodule:: pointcloud
+   :members:
+.. automodule:: procrustes
+   :members:
+.. automodule:: ransac
+   :members:
+.. automodule:: ransaccuda
+   :members:
+.. automodule:: sampling
+   :members:
+.. automodule:: stats
+   :members:
    
 Indices and tables
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
-
-
+* :ref:`search`

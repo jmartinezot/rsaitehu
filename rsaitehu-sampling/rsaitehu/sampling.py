@@ -1,3 +1,7 @@
+'''
+Sampling functions for generating random points on geometric objects.
+'''
+
 import random
 import math
 import numpy as np
@@ -114,7 +118,7 @@ def sampling_circle_2d(n_samples:int=1, center:Tuple[float, float]=(0,0), radius
 
     |sampling_circle_2d|
 
-    .. |sampling_circle_2d| image:: ../../_static/images/sampling_circle_2d.png
+    .. |sampling_circle_2d| image:: ../../doc/source/_static/images/sampling_circle_2d.png
     """
     # Set the random seed for reproducibility if provided
     if seed is not None:
@@ -231,7 +235,7 @@ def sampling_circle_3d(n_samples, radius: float = 1.0, center: np.ndarray =np.ar
 
     |sampling_circle_3d|
 
-    .. |sampling_circle_3d| image:: ../../_static/images/sampling_circle_3d.png
+    .. |sampling_circle_3d| image:: ../../doc/source/_static/images/sampling_circle_3d.png
 
     '''
     if seed is not None:
@@ -369,7 +373,7 @@ def sampling_parallelogram_2d(n_samples: int, normal1: Tuple[float, float], norm
 
     |sampling_parallelogram_2d|
 
-    .. |sampling_parallelogram_2d| image:: ../../_static/images/sampling_parallelogram_2d.png
+    .. |sampling_parallelogram_2d| image:: ../../doc/source/_static/images/sampling_parallelogram_2d.png
     """
     if seed is not None:
         random.seed(seed)
@@ -486,7 +490,7 @@ def sampling_alligned_parallelogram_2d(n_samples: int, min_x: float, max_x: floa
 
     |sampling_alligned_parallelogram_2d|
 
-    .. |sampling_alligned_parallelogram_2d| image:: ../../_static/images/sampling_alligned_parallelogram_2d.png
+    .. |sampling_alligned_parallelogram_2d| image:: ../../doc/source/_static/images/sampling_alligned_parallelogram_2d.png
     '''
     if seed is not None:
         random.seed(seed)
@@ -642,7 +646,7 @@ def sampling_parallelogram_3d(n_samples: int, normal1: Tuple[float, float, float
 
     |sampling_parallelogram_3d|
 
-    .. |sampling_parallelogram_3d| image:: ../../_static/images/sampling_parallelogram_3d.png
+    .. |sampling_parallelogram_3d| image:: ../../doc/source/_static/images/sampling_parallelogram_3d.png
     '''
     if seed is not None:
         random.seed(seed)
@@ -753,7 +757,7 @@ def sampling_parallelepiped_3d(n_samples: int, normal1: Tuple[float, float, floa
 
     |sampling_parallelepiped_3d|
 
-    .. |sampling_parallelepiped_3d| image:: ../../_static/images/sampling_parallelepiped_3d.png
+    .. |sampling_parallelepiped_3d| image:: ../../doc/source/_static/images/sampling_parallelepiped_3d.png
     '''
     if seed is not None:
         random.seed(seed)
@@ -875,7 +879,7 @@ def sampling_sphere(n_samples:int=1, center:Tuple[float, float, float]=(0,0,0), 
     
     |sampling_sphere|
 
-    .. |sampling_sphere| image:: ../../_static/images/sampling_sphere.png
+    .. |sampling_sphere| image:: ../../doc/source/_static/images/sampling_sphere.png
 
     """
     # Set the random seed for reproducibility if provided
@@ -983,7 +987,7 @@ def sampling_pcd_points(pcd: o3d.geometry.PointCloud, num_points: int = 1, seed:
 
     |sampling_pcd_points|
 
-    .. |sampling_pcd_points| image:: ../../_static/images/sampling_pcd_points.png
+    .. |sampling_pcd_points| image:: ../../doc/source/_static/images/sampling_pcd_points.png
     """
 
     points = np.asarray(pcd.points)

@@ -1,3 +1,6 @@
+'''
+Geometry related functions.
+'''
 import numpy as np
 from typing import List, Union, Tuple, Optional
 from scipy.linalg import svd
@@ -382,7 +385,7 @@ def get_intersection_point_of_line_with_plane(line: np.ndarray, plane: np.ndarra
 
     |drawing_draw_line_extension_to_plane_example|
 
-    .. |drawing_draw_line_extension_to_plane_example| image:: ../../_static/images/drawing_draw_line_extension_to_plane_example.png
+    .. |drawing_draw_line_extension_to_plane_example| image:: ../../doc/source/_static/images/drawing_draw_line_extension_to_plane_example.png
 
     '''
     # Step 1: Calculate the direction vector of the line.

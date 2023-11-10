@@ -60,7 +60,7 @@ And visualize them:
     
 |coreransac_living_room_pcd|
 
-    .. |coreransac_living_room_pcd| image:: ../../_static/images/coreransac_living_room_pcd.png
+    .. |coreransac_living_room_pcd| image:: ../../doc/source/_static/images/coreransac_living_room_pcd.png
 
 ::
 
@@ -68,7 +68,7 @@ And visualize them:
 
 |coreransac_office_pcd|
 
-    .. |coreransac_office_pcd| image:: ../../_static/images/coreransac_office_pcd.png
+    .. |coreransac_office_pcd| image:: ../../doc/source/_static/images/coreransac_office_pcd.png
 
 
 A brief explanation of the relationship between the functions defined here is given below:
@@ -159,7 +159,7 @@ def get_how_many_below_threshold_between_line_and_points_and_their_indices(point
 
     |coreransac_get_how_many_below_threshold_between_line_and_points_and_their_indices_example|
 
-    .. |coreransac_get_how_many_below_threshold_between_line_and_points_and_their_indices_example| image:: ../../_static/images/coreransac_get_how_many_below_threshold_between_line_and_points_and_their_indices_example.png
+    .. |coreransac_get_how_many_below_threshold_between_line_and_points_and_their_indices_example| image:: ../../doc/source/_static/images/coreransac_get_how_many_below_threshold_between_line_and_points_and_their_indices_example.png
 
 
     """
@@ -302,7 +302,7 @@ def get_ransac_plane_iteration_results(points: np.ndarray, threshold: float, len
 
     |coreransac_get_ransac_plane_iteration_results_example|
 
-    .. |coreransac_get_ransac_plane_iteration_results_example| image:: ../../_static/images/coreransac_get_ransac_plane_iteration_results_example.png
+    .. |coreransac_get_ransac_plane_iteration_results_example| image:: ../../doc/source/_static/images/coreransac_get_ransac_plane_iteration_results_example.png
 
     """
     if len_points is None:
@@ -371,7 +371,7 @@ def get_ransac_plane_results(points: np.ndarray, threshold: float, num_iteration
 
     |coreransac_get_ransac_plane_results_example|
 
-    .. |coreransac_get_ransac_plane_results_example| image:: ../../_static/images/coreransac_get_ransac_plane_results_example.png
+    .. |coreransac_get_ransac_plane_results_example| image:: ../../doc/source/_static/images/coreransac_get_ransac_plane_results_example.png
 
 
     """

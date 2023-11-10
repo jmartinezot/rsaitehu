@@ -33,7 +33,7 @@ def draw_segment(line: np.ndarray, color: str = 'red', style: str = '-', ax = No
     
     |matplot3d_draw_segment_example|
 
-    .. |matplot3d_draw_segment_example| image:: ../../_static/images/matplot3d_draw_segment_example.png
+    .. |matplot3d_draw_segment_example| image:: ../../doc/source/_static/images/matplot3d_draw_segment_example.png
     '''
     plot_inside_function = False
     if ax is None:
@@ -73,7 +73,7 @@ def draw_polygon(vertices: np.ndarray, color: str = 'red', alpha: float = 0.5, a
     
     |matplot3d_draw_polygon_example|
 
-    .. |matplot3d_draw_polygon_example| image:: ../../_static/images/matplot3d_draw_polygon_example.png
+    .. |matplot3d_draw_polygon_example| image:: ../../doc/source/_static/images/matplot3d_draw_polygon_example.png
     '''
     plot_inside_function = False
     if ax is None:
@@ -122,7 +122,7 @@ def draw_circle(center: np.ndarray = np.array([0, 0, 0]), radius: float = 1, nor
 
     |matplot3d_draw_circle_example|
 
-    .. |matplot3d_draw_circle_example| image:: ../../_static/images/matplot3d_draw_circle_example.png
+    .. |matplot3d_draw_circle_example| image:: ../../doc/source/_static/images/matplot3d_draw_circle_example.png
 
     '''
     plot_inside_function = False
@@ -204,7 +204,7 @@ def draw_circumference(center: np.ndarray = np.array([0, 0, 0]), radius: float =
 
     |matplot3d_draw_circumference_example|
 
-    .. |matplot3d_draw_circumference_example| image:: ../../_static/images/matplot3d_draw_circumference_example.png
+    .. |matplot3d_draw_circumference_example| image:: ../../doc/source/_static/images/matplot3d_draw_circumference_example.png
 
     '''
     plot_inside_function = False
@@ -268,7 +268,7 @@ def draw_points(points: np.ndarray, color: str = 'red', style: str = "o", alpha:
 
     |matplot3d_draw_points_example|
 
-    .. |matplot3d_draw_points_example| image:: ../../_static/images/matplot3d_draw_points_example.png
+    .. |matplot3d_draw_points_example| image:: ../../doc/source/_static/images/matplot3d_draw_points_example.png
     '''
     plot_inside_function = False
     if ax is None:

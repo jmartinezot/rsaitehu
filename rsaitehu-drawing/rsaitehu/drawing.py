@@ -1,8 +1,11 @@
+'''
+This module contains functions for drawing 3D objects using matplotlib.
+'''
 import numpy as np
 import open3d as o3d
 from rsaitehu import geometry as geom
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+# from mpl_toolkits.mplot3d import Axes3D
 
 def draw_plane_as_lines_open3d(A, B, C, D, size=10, line_color=[1, 0, 0]):
     # Define the vertices of the plane
@@ -156,7 +159,7 @@ def draw_cube(cube_min: np.ndarray, cube_max: np.ndarray, color: str = "red", al
 
     |drawing_draw_cube_example|
 
-    .. |drawing_draw_cube_example| image:: ../../_static/images/drawing_draw_cube_example.png
+    .. |drawing_draw_cube_example| image:: ../../doc/source/_static/images/drawing_draw_cube_example.png
 
     '''
     plot_inside_function = False
@@ -219,7 +222,7 @@ def draw_line_extension_to_plane(line: np.ndarray, plane: np.ndarray, ax = None)
 
     |drawing_draw_line_extension_to_plane_example|
 
-    .. |drawing_draw_line_extension_to_plane_example| image:: ../../_static/images/drawing_draw_line_extension_to_plane_example.png
+    .. |drawing_draw_line_extension_to_plane_example| image:: ../../doc/source/_static/images/drawing_draw_line_extension_to_plane_example.png
 
     '''
     plot_inside_function = False

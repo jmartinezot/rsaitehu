@@ -1,3 +1,7 @@
+'''
+Procrustes-related functions.
+'''
+
 from sklearn.base import BaseEstimator, ClassifierMixin
 import numpy as np
 from scipy.spatial import procrustes

@@ -1,3 +1,6 @@
+'''
+This module contains functions related to RANSAC and CUDA parallel processing.
+'''
 from numba import cuda, float32
 import math
 from rsaitehu import ransac as crs

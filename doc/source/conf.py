@@ -25,7 +25,11 @@ sys.path.insert(0, os.path.abspath('../../rsaitehu-ransac/rsaitehu'))
 sys.path.insert(0, os.path.abspath('../../rsaitehu-ransaccuda/rsaitehu'))
 sys.path.insert(0, os.path.abspath('../../rsaitehu-sampling/rsaitehu'))
 sys.path.insert(0, os.path.abspath('../../rsaitehu-stats/rsaitehu'))
+sys.path.insert(0, os.path.abspath('../rsaitehu'))
 sys.path.insert(0, os.path.abspath('../..'))  # Source code dir relative to this file
+
+def setup(app):
+    app.add_css_file('my_theme.css')
 
 # -- Project information -----------------------------------------------------
 
@@ -60,11 +64,15 @@ exclude_patterns = []
 # html_theme = 'alabaster'
 html_theme = "sphinx_rtd_theme" 
 html_theme_options = {'body_max_width' : None, 'collapse_navigation' : False}
+# html_theme = "sphinx_book_theme"
+# html_theme = 'classic'
+# html_theme_options = {'nosidebar': True}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = ['custom.css']
 
 # conf.py options for Latex
 latex_engine = 'pdflatex'
