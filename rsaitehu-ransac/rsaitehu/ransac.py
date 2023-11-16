@@ -5,7 +5,7 @@ In this module all the functions related to the **RANSAC** algorithm for **plane
 
 The **pointcloud** is expected to be a **numpy array** of shape **(N, 3)** where **N** is the number of **points** and **3** is the 
 number of **coordinates (x, y, z)**. 
-**No** information about **RGB** values or normals are taken into account. Therefore, an **Open3D** point cloud must be **converted**
+No information about **RGB** values or normals are taken into account. Therefore, an **Open3D** point cloud must be **converted**
 to a **numpy array** before 
 using the functions in this module.
 
@@ -20,7 +20,7 @@ The following code is an example of how to extract the points from an Open3D poi
     pcd = o3d.io.read_point_cloud(filename)
     np_points = np.asarray(pcd.points)
 
-The pointcloud could be in **ply* or **pcd** format, because Open3D can read both formats.
+The pointcloud could be in **ply** or **pcd** format, because Open3D can read both formats.
 
 You can always access to the pointclouds provided by Open3D. For example, the following code shows how to access to the LivingRoomPointClouds, 
 which are 57 point clouds of from the Redwood RGB-D Dataset.
@@ -78,6 +78,18 @@ a pointcloud, the maximum distance from a point to the plane for it to be consid
 returns the best plane parameters, the number of inliers, and their indices. It calls the function :func:`get_ransac_plane_iteration_results` to get the results
 of each iteration of the RANSAC algorithm. 
 
+The function :func:`get_ransac_plane_iteration_results` returns the results of one iteration of the RANSAC algorithm. It calls the function
+:func:`get_how_many_below_threshold_between_plane_and_points_and_their_indices` to get the number of inliers (points which are below a threshold distance 
+from the plane) and their indices.
+
+The function :func:`get_ransac_line_iteration_results` is analogous to :func:`get_ransac_plane_iteration_results` but for lines. It calls the function
+:func:`get_how_many_below_threshold_between_line_and_points_and_their_indices` to get the number of inliers (points which are below a threshold distance
+from the line) and their indices.
+
+The function :func:`get_fitting_data_from_list_planes` returns a list of dictionaries containing the plane parameters, number of inliers, and their indices 
+for each plane in a given list, while the function :func:`get_best_fitting_data_from_list_planes` returns a dictionary containing the plane parameters, 
+number of inliers, and their indices for the best plane in a given list. 
+
 '''
 
 import numpy as np
@@ -90,7 +102,11 @@ from rsaitehu import geometry as geom
 
 def get_how_many_below_threshold_between_line_and_points_and_their_indices(points: np.ndarray, line_two_points: np.ndarray, threshold: np.float32) -> Tuple[int, np.ndarray]:
     """
-    Computes how many points are below a threshold distance from a line and returns their count and their indices.
+    Computes **how many points** are below a **threshold** distance from a **line** and returns their **count** and their **indices**. 
+
+    This functions expects a **collection of points**, **two points defining the line**, and a **threshold** for inlier 
+    determination. It returns a tuple containing the **number of inliers** and their **indices**. The type of the values of 
+    the tuple are **int** and **np.ndarray**, respectively.
 
     :param points: The collection of points to measure the distance to the line.
     :type points: np.ndarray
@@ -179,7 +195,11 @@ def get_how_many_below_threshold_between_line_and_points_and_their_indices(point
 
 def get_how_many_below_threshold_between_plane_and_points_and_their_indices(points: np.ndarray, plane: np.ndarray, threshold: np.float32) -> Tuple[int, np.ndarray]:
     """
-    Computes how many points are below a threshold distance from a plane and returns their count and their indices.
+    Computes **how many points** are below a **threshold** distance from a **plane** and returns their **count** and their **indices**.
+
+    This functions expects a **collection of points**, **four parameters defining the plane**, and a **threshold** for inlier
+    determination. It returns a tuple containing the **number of inliers** and their **indices**. The type of the values of
+    the tuple are **int** and **np.ndarray**, respectively.
 
     :param points: The collection of points to measure the distance to the line.
     :type points: np.ndarray
@@ -225,7 +245,12 @@ def get_how_many_below_threshold_between_plane_and_points_and_their_indices(poin
 
 def get_ransac_line_iteration_results(points: np.ndarray, threshold: float, len_points:Optional[int]=None, seed: Optional[int]=None) -> dict:
     """
-    Returns the results of one iteration of the RANSAC algorithm for line fitting.
+    Returns the results of **one iteration** of the **RANSAC** algorithm for **line fitting**.
+
+    This functions expects a **collection of points**, the **number of points** in the collection, the **maximum distance** 
+    from a point to the line for it to be considered an inlier, and the **seed** to initialize the random number generator.
+    It returns a dictionary containing the **current line parameters**, **number of inliers**, and **their indices**. The keys 
+    of the dictionary are **current_random_points**, **"current_line"**, **"threshold"**, **"number_inliers"**, and **"indices_inliers"**, respectively.
     
     :param points: The collection of points to fit the line to.
     :type points: np.ndarray
@@ -249,7 +274,7 @@ def get_ransac_line_iteration_results(points: np.ndarray, threshold: float, len_
 
 def get_ransac_plane_iteration_results(points: np.ndarray, threshold: float, len_points:Optional[int]=None, seed: Optional[int]=None) -> dict:
     """
-    Returns the results of one iteration of the RANSAC algorithm for plane fitting.
+    Returns the results of **one iteration** of the **RANSAC** algorithm for **plane fitting**.
 
     This functions expects a **collection of points**, the **number of points** in the collection, the **maximum distance** from a point
     to the plane for it to be considered an inlier, and the **seed** to initialize the random number generator.
@@ -318,7 +343,7 @@ def get_ransac_plane_iteration_results(points: np.ndarray, threshold: float, len
 
 def get_ransac_plane_results(points: np.ndarray, threshold: float, num_iterations: int, len_points:Optional[int]=None, seed: Optional[int] = None) -> dict:
     """
-    Computes the **best plane** that fits a **collection of points** and the indices of the inliers.
+    Computes the **best plane** that fits a **collection of points** and the **indices of the inliers**.
 
     This functions expects a **collection of points**, the **number of points** in the collection, the **maximum distance** from a point 
     to the plane for it to be considered an inlier, and the **number of iterations** to run the RANSAC algorithm. 
@@ -398,7 +423,15 @@ def get_ransac_plane_results(points: np.ndarray, threshold: float, num_iteration
 
 def get_fitting_data_from_list_planes(points: np.ndarray, list_planes: List[np.ndarray], threshold: float) -> List[Dict]:
     '''
-    Returns the fitting data for each plane in the list of planes.
+    Returns a list of dictionaries containing the **plane parameters**, **number of inliers**, and **their indices** for 
+    **each plane in a given list**.
+
+    It takes a collection of points, a list of plane equations, and a threshold for inlier determination. This function
+    expects a **collection of points**, a **list of plane equations**, and a **threshold** for inlier determination.
+    It returns a list where each entry corresponds to a plane and contains a dictionary with the plane's parameters, 
+    the count of inliers, and the indices of these inliers. The keys of the dictionary are **"plane"**, **"number_inliers"**, 
+    and **"indices_inliers"**, respectively. The type of the values of the dictionary are **np.ndarray**, **int**, 
+    and **np.ndarray**, respectively.
 
     :param points: The collection of points to fit the plane to.
     :type points: np.ndarray
@@ -445,7 +478,15 @@ def get_fitting_data_from_list_planes(points: np.ndarray, list_planes: List[np.n
 
 def get_best_fitting_data_from_list_planes(points: np.ndarray, list_planes: List[np.ndarray], threshold: float) -> Dict:
     '''
-    Returns the fitting data for the best plane in the list of planes.
+    Returns a dictionary containing the **plane parameters**, **number of inliers**, and **their indices** for the 
+    **best plane** in a **given list**.
+    
+    It takes an array of points, a list of plane equations, and a threshold for defining inliers. 
+    The function evaluates each plane for its fitting quality and returns a dictionary with the parameters of the plane 
+    that has the highest inlier count, along with the count and indices of these inliers. This function expects a 
+    **collection of points**, a **list of plane equations**, and a **threshold** for inlier determination. It returns a 
+    dictionary with the plane's parameters, the count of inliers, and the indices of these inliers. The keys of the dictionary 
+    are **"plane"**, **"number_inliers"**, and **"indices_inliers"**, respectively. The type of the values of the dictionary are **np.ndarray**, **int**, and **np.ndarray**, respectively.
 
     :param points: The collection of points to fit the plane to.
     :type points: np.ndarray

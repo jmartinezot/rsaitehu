@@ -13,7 +13,7 @@ import sys
 from rsaitehu import geometry as geom
 
 @cuda.jit
-def get_how_many_and_which_below_threshold_kernel(points_x: np.ndarray, points_y: np.ndarray, points_z: np.ndarray,
+def __get_how_many_and_which_below_threshold_kernel(points_x: np.ndarray, points_y: np.ndarray, points_z: np.ndarray,
                                          a: float, b: float, c: float, d: float,
                                          optimized_threshold: float, point_indices: np.ndarray) -> None:
     """
@@ -45,7 +45,7 @@ def get_how_many_and_which_below_threshold_kernel(points_x: np.ndarray, points_y
             point_indices[i] = 1
 
 @cuda.jit
-def get_how_many_below_threshold_kernel(points_x: np.ndarray, points_y: np.ndarray, points_z: np.ndarray,
+def __get_how_many_below_threshold_kernel(points_x: np.ndarray, points_y: np.ndarray, points_z: np.ndarray,
                                          a: float, b: float, c: float, d: float,
                                          optimized_threshold: float, result: int) -> None:
     """
@@ -77,7 +77,7 @@ def get_how_many_below_threshold_kernel(points_x: np.ndarray, points_y: np.ndarr
             cuda.atomic.add(result, 0, 1)
 
 @cuda.jit
-def get_how_many_line_below_threshold_kernel(points_x: np.ndarray, points_y: np.ndarray, points_z: np.ndarray,
+def __get_how_many_line_below_threshold_kernel(points_x: np.ndarray, points_y: np.ndarray, points_z: np.ndarray,
                                          line_two_points: np.ndarray,
                                          threshold: float, result: int) -> None:
     """
@@ -124,35 +124,6 @@ def get_how_many_line_below_threshold_kernel(points_x: np.ndarray, points_y: np.
         dist = magnitude_cross_product / magnitude_C_minus_B
         if dist <= threshold:
             cuda.atomic.add(result, 0, 1)
-'''
-@cuda.jit
-def get_how_many_below_threshold_kernel(points_x, points_y, points_z, a, b, c, d, optimized_threshold, point_indices):
-    i = cuda.grid(1)
-    
-    # max_threads_per_block = cuda.config.MAX_THREADS_PER_BLOCK
-    # THREADS_PER_BLOCK = min(max_threads_per_block, points_x.shape[0])
-    THREADS_PER_BLOCK = 512
-    # Define shared memory array
-    shared_points_x = cuda.shared.array(shape=(THREADS_PER_BLOCK,), dtype=numba.float32)
-    shared_points_y = cuda.shared.array(shape=(THREADS_PER_BLOCK,), dtype=numba.float32)
-    shared_points_z = cuda.shared.array(shape=(THREADS_PER_BLOCK,), dtype=numba.float32)
-    
-    if i < points_x.shape[0]:
-        # Copy data from global memory to shared memory
-        shared_points_x[cuda.threadIdx.x] = points_x[i]
-        shared_points_y[cuda.threadIdx.x] = points_y[i]
-        shared_points_z[cuda.threadIdx.x] = points_z[i]
-        
-        cuda.syncthreads()
-        
-        # Access data from shared memory
-        dist = math.fabs(a * shared_points_x[cuda.threadIdx.x] + b * shared_points_y[cuda.threadIdx.x] + c * shared_points_z[cuda.threadIdx.x] + d)
-        
-        cuda.syncthreads()
-        
-        if dist <= optimized_threshold:
-            point_indices[i] = 1
-'''
 
 def get_how_many_below_threshold_between_line_and_points_cuda(
     points: np.ndarray, d_points_x: np.ndarray, d_points_y: np.ndarray, d_points_z: np.ndarray,
@@ -192,7 +163,7 @@ def get_how_many_below_threshold_between_line_and_points_cuda(
     threadsperblock = min(max_threads_per_block, threadsperblock)
     blockspergrid = math.ceil(num_points / threadsperblock)
     t2 = time()
-    get_how_many_line_below_threshold_kernel[blockspergrid, threadsperblock](d_points_x, d_points_y, d_points_z,
+    __get_how_many_line_below_threshold_kernel[blockspergrid, threadsperblock](d_points_x, d_points_y, d_points_z,
                                          line_two_points, threshold, d_result)
     t3 = time()
     # Copy the result back to the host
@@ -242,7 +213,7 @@ def get_how_many_and_which_below_threshold_between_plane_and_points_and_their_in
     blockspergrid = math.ceil(num_points / threadsperblock)
     # point_indices = cuda.device_array(point_indices.shape, dtype=point_indices.dtype)
     d_point_indices = cuda.to_device(point_indices)
-    get_how_many_and_which_below_threshold_kernel[blockspergrid, threadsperblock](d_points_x, d_points_y, d_points_z, a, b, c, d, optimized_threshold, d_point_indices)
+    __get_how_many_and_which_below_threshold_kernel[blockspergrid, threadsperblock](d_points_x, d_points_y, d_points_z, a, b, c, d, optimized_threshold, d_point_indices)
     point_indices = d_point_indices.copy_to_host()
     # get the count of point_indices that are not -1
     count = np.count_nonzero(point_indices != -1)
@@ -292,7 +263,7 @@ def get_how_many_below_threshold_between_plane_and_points_cuda(
     max_threads_per_block = cuda.get_current_device().MAX_THREADS_PER_BLOCK
     threadsperblock = min(max_threads_per_block, threadsperblock)
     blockspergrid = math.ceil(num_points / threadsperblock)
-    get_how_many_below_threshold_kernel[blockspergrid, threadsperblock](d_points_x, d_points_y, d_points_z, a, b, c, d, optimized_threshold, d_result)
+    __get_how_many_below_threshold_kernel[blockspergrid, threadsperblock](d_points_x, d_points_y, d_points_z, a, b, c, d, optimized_threshold, d_result)
     # Copy the result back to the host
     cuda.synchronize()
     result = d_result.copy_to_host()[0]
@@ -337,7 +308,7 @@ def get_ransac_line_iteration_results_cuda(points: np.ndarray,
     how_many_in_line = get_how_many_below_threshold_between_line_and_points_cuda(points, d_points_x, d_points_y, d_points_z, current_line, threshold)
     return {"current_line": current_random_points, "threshold": threshold, "number_inliers": how_many_in_line}
 
-def get_ransac_iteration_results_cuda(points: np.ndarray, 
+def get_ransac_plane_iteration_results_cuda(points: np.ndarray, 
                                        points_x: np.ndarray, 
                                        points_y: np.ndarray, 
                                        points_z: np.ndarray, 
@@ -373,11 +344,11 @@ def get_ransac_iteration_results_cuda(points: np.ndarray,
     # esto es lo que tarda mucho
     current_random_points = crs.get_np_array_of_three_random_points_from_np_array_of_points(points, num_points)
     current_plane = geom.get_plane_from_list_of_three_points(current_random_points.tolist())
-    how_many_in_plane, current_point_indices = get_how_many_below_threshold_between_plane_and_points_and_their_indices_cuda(points, points_x, points_y, points_z, d_points_x, d_points_y, d_points_z, current_plane, threshold)
+    how_many_in_plane, current_point_indices = get_how_many_and_which_below_threshold_between_plane_and_points_and_their_indices_cuda(points, points_x, points_y, points_z, d_points_x, d_points_y, d_points_z, current_plane, threshold)
     return {"current_plane": current_plane, "number_inliers": how_many_in_plane, "indices_inliers": current_point_indices}
 
 
-def get_ransac_results_cuda(points, num_points, threshold, num_iterations):
+def get_ransac_plane_results_cuda(points, num_points, threshold, num_iterations):
     """
     Computes the best plane that fits a collection of points and the indices of the inliers.
     
@@ -400,35 +371,29 @@ def get_ransac_results_cuda(points, num_points, threshold, num_iterations):
 
     ::
 
-        >>> import customransac
+        >>> from rsaitehu import ransaccuda
         >>> import open3d as o3d
         >>> import numpy as np
         >>> import random
-        >>> pcd_filename = "/tmp/Lantegi/Kubic.ply"
-        >>> pcd = o3d.io.read_point_cloud(pcd_filename)
-        >>> pcd_points = np.asarray(pcd.points, dtype="float32")
-        >>> num_points = len(pcd_points)
-        >>> pcd_points_x = pcd_points[:, 0]
-        >>> pcd_points_y = pcd_points[:, 1]
-        >>> pcd_points_z = pcd_points[:, 2]
+        >>> dataset = o3d.data.OfficePointClouds()
+        >>> pcds_offices = []
+        >>> for pcd_path in dataset.paths:
+        >>>     pcds_offices.append(o3d.io.read_point_cloud(pcd_path))
+        >>> office_pcd = pcds_offices[0]
+        >>> pcd_points = np.asarray(office_pcd.points)
         >>> threshold = 0.1
-        >>> num_iterations = 2
-        >>> list_num_points = list(range(num_points))
-        >>> random_points_indices_1 = np.array([], dtype="int64")
-        >>> random_points_indices_2 = np.array([], dtype="int64")
-        >>> random_points_indices_3 = np.array([], dtype="int64")
-        >>> for i in range(num_iterations):
-        >>>     random_points_indices = random.sample(list_num_points, 3)
-        >>>     random_points_indices_1 = np.append(random_points_indices_1, random_points_indices[0])
-        >>>     random_points_indices_2 = np.append(random_points_indices_2, random_points_indices[1])
-        >>>     random_points_indices_3 = np.append(random_points_indices_3, random_points_indices[2])
-        >>> plane_parameters, indices = customransac.get_best_plane_and_inliers(pcd_points_x, pcd_points_y, pcd_points_z, threshold, num_iterations, random_points_indices_1, random_points_indices_2, random_points_indices_3)
-        >>> plane_parameters
-        array([ 0.0012,  0.0012,  0.0012,  0.0012])
-        >>> inlier_cloud = pcd.select_by_index(inliers)
+        >>> num_iterations = 20
+        >>> dict_results = ransaccuda.get_ransac_plane_results_cuda(pcd_points, threshold, num_iterations, seed = 42)
+        >>> dict_results
+        {'best_plane': array([-0.17535096,  0.45186984, -2.44615646,  5.69205427]),
+        'number_inliers': 153798,
+        'indices_inliers': array([     0,      1,      2, ..., 248476, 248477, 248478])}
+        >>> inliers = dict_results["indices_inliers"]
+        >>> inlier_cloud = office_pcd.select_by_index(inliers)
         >>> inlier_cloud.paint_uniform_color([1.0, 0, 0])
-        >>> outlier_cloud = pcd.select_by_index(inliers, invert=True)
+        >>> outlier_cloud = office_pcd.select_by_index(inliers, invert=True)
         >>> o3d.visualization.draw_geometries([inlier_cloud, outlier_cloud])
+
     """
     best_plane = None
     number_points_in_best_plane = 0
@@ -440,7 +405,7 @@ def get_ransac_results_cuda(points, num_points, threshold, num_iterations):
     d_points_z = cuda.to_device(points_z)
     indices_inliers = None
     for _ in range(num_iterations):
-        dict_results = get_ransac_iteration_results_cuda(points, points_x, points_y, points_z, d_points_x, d_points_y, d_points_z, num_points, threshold)
+        dict_results = get_ransac_plane_iteration_results_cuda(points, points_x, points_y, points_z, d_points_x, d_points_y, d_points_z, num_points, threshold)
         current_plane = dict_results["current_plane"]
         how_many_in_plane = dict_results["number_inliers"]
         current_indices_inliers = dict_results["indices_inliers"]
