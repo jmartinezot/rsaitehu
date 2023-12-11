@@ -36,6 +36,7 @@ def to_heatmap_custom(df, means):
     return heatmap_data
 
 def to_image_custom(df_original, df_heatmap_data, filename, df_p_values = None):
+    print("Entering to_image_custom")
     # Create a colormap from the list of colors
     cmap = ListedColormap(['red', 'gray', 'green', 'white'])
     sns.set(font_scale=1.2)

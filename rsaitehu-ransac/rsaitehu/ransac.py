@@ -95,7 +95,6 @@ number of inliers, and their indices for the best plane in a given list.
 import numpy as np
 import open3d as o3d
 import math
-from rsaitehu import ransacutils as crsu
 from rsaitehu import sampling as sampling
 from typing import Optional, List, Tuple, Dict, Union
 from rsaitehu import geometry as geom
@@ -413,7 +412,7 @@ def get_ransac_plane_results(points: np.ndarray, threshold: float, num_iteration
         current_indices_inliers = dict_results["indices_inliers"]
         if how_many_in_plane > number_points_in_best_plane:
             inliers_ratio = how_many_in_plane / len_points
-            max_num_iterations = crsu.compute_number_iterations(inliers_ratio, alpha = 0.05)
+            max_num_iterations = compute_number_iterations(inliers_ratio, alpha = 0.05)
             print("Current inliers ratio: ", inliers_ratio, " Max num iterations: ", max_num_iterations)
             number_points_in_best_plane = how_many_in_plane
             best_plane = current_plane
@@ -533,3 +532,18 @@ def get_best_fitting_data_from_list_planes(points: np.ndarray, list_planes: List
     fitting_data = get_fitting_data_from_list_planes(points, list_planes, threshold)
     best_fitting_data = max(fitting_data, key=lambda fitting_data: fitting_data["number_inliers"])
     return best_fitting_data
+
+def compute_number_iterations(inliers_ratio, alpha):
+    """
+    Computes the minimum number of iterations needed to achieve a given probability of success in RANSAC.
+
+    For success this is understood as the probability of finding at least one sample set free of outliers.
+
+    :param inliers_ratio: Ratio of inliers in the data.
+    :type inliers_ratio: float
+    :param alpha: Desired probability of success.
+    :type alpha: float
+    :return: Minimum number of iterations needed.
+    :rtype: float
+    """
+    return math.log(1-alpha) / math.log(1 - inliers_ratio ** 3)

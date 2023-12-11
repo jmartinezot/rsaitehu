@@ -11,7 +11,7 @@ namespaces = true
 
 [project]
 name = "rsaitehu-ransac"
-version = "0.0.2"
+version = "0.0.6"
 description = "ransac utilities"
 dependencies = [
   "numpy>=1.22.0",

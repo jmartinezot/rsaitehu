@@ -473,15 +473,17 @@ def get_fitting_data_from_list_planes_cuda(points: np.ndarray, list_planes: List
     d_points_y = cuda.to_device(d_points_y)
     d_points_z = cuda.to_device(d_points_z)
 
+    get_how_many_below_threshold_between_plane_and_points_cuda
+
     list_fitting_data = []
     for plane in list_planes:
-        how_many_in_plane, indices_inliers = get_how_many_and_which_below_threshold_between_plane_and_points_and_their_indices_cuda(points, 
-                                                                                                        d_points_x=d_points_x,
-                                                                                                        d_points_y=d_points_y,
-                                                                                                        d_points_z=d_points_z,
-                                                                                                        plane = plane, 
-                                                                                                        threshold = threshold)
-        list_fitting_data.append({"plane": plane, "number_inliers": how_many_in_plane, "indices_inliers": indices_inliers})
+        how_many_in_plane = get_how_many_below_threshold_between_plane_and_points_cuda(points, 
+                                                                                    d_points_x=d_points_x,
+                                                                                    d_points_y=d_points_y,
+                                                                                    d_points_z=d_points_z,
+                                                                                    plane = plane, 
+                                                                                    threshold = threshold)
+        list_fitting_data.append({"plane": plane, "number_inliers": how_many_in_plane})
     return list_fitting_data
 
 def get_best_fitting_data_from_list_planes_cuda(points: np.ndarray, list_planes: List[np.ndarray], threshold: float) -> Dict:
@@ -532,4 +534,23 @@ def get_best_fitting_data_from_list_planes_cuda(points: np.ndarray, list_planes:
     '''
     fitting_data = get_fitting_data_from_list_planes_cuda(points, list_planes, threshold)
     best_fitting_data = max(fitting_data, key=lambda fitting_data: fitting_data["number_inliers"])
+    plane = best_fitting_data["plane"]
+    # Extract x, y, z coordinates from np_points
+    points_x = points[:, 0]
+    points_y = points[:, 1]
+    points_z = points[:, 2]
+    # Convert points_x, points_y, and points_z to contiguous arrays
+    d_points_x = np.ascontiguousarray(points_x)
+    d_points_y = np.ascontiguousarray(points_y)
+    d_points_z = np.ascontiguousarray(points_z)
+    d_points_x = cuda.to_device(d_points_x)
+    d_points_y = cuda.to_device(d_points_y)
+    d_points_z = cuda.to_device(d_points_z)
+    how_many_in_plane, indices_inliers = get_how_many_and_which_below_threshold_between_plane_and_points_and_their_indices_cuda(points, 
+                                                                                                        d_points_x=d_points_x,
+                                                                                                        d_points_y=d_points_y,
+                                                                                                        d_points_z=d_points_z,
+                                                                                                        plane = plane, 
+                                                                                                        threshold = threshold)
+    best_fitting_data["indices_inliers"] = indices_inliers
     return best_fitting_data

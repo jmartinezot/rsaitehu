@@ -11,7 +11,7 @@ namespaces = true
 
 [project]
 name = "rsaitehu-stats"
-version = "0.0.1"
+version = "0.0.2"
 description = "Stats utilities"
 dependencies = [
   "numpy>=1.22.0",
